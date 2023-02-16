@@ -132,7 +132,6 @@ class TransformerBlockPostLN(nn.Module):
       r_r_bias: Tensor
       rotary_pe: Boolean.
       pe_rotary_dims: Int
-      debug_mode: Boolean.
 
     Returns:
       output after transformer block.
@@ -141,7 +140,6 @@ class TransformerBlockPostLN(nn.Module):
 
     # Attention block.
     assert inputs.ndim == 3
-    debug_output = None
     x = relative_attention.RelativeSelfAttention(
         inputs,
         num_heads=num_heads,
@@ -477,7 +475,6 @@ class TransformerDecoder(nn.Module):
           cache=cache)
       x = nn.dropout(x, rate=dropout_rate, deterministic=not train)
 
-    debug_outputs = []
     for i in range(num_layers):
 
       if pre_ln:
